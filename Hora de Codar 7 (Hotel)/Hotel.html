@@ -1,0 +1,130 @@
+<html>
+<head>
+    <script>
+        var nome = "";
+        
+        function exibir_hotel() {
+            alert('Bem-vindo ao Overlook Hotel!');
+            nome = prompt("Digite o seu nome: ");
+            if (nome === "") {
+                alert('Por favor, informe um nome:');
+                exibir_hotel();
+            } else {
+                alert("Olá " + nome + ", é um prazer ter você por aqui!");
+                inicio();
+            }
+        }
+
+        function inicio() {
+            senha();
+            var escolha = parseInt(prompt('Selecione uma opção: 1) Reserva de Quartos 2) Cadastro de Hóspedes 3) Abastecimento de Carros 4) Sair'));
+
+            switch (escolha) {
+                case 1:
+                    reserva_quartos();
+                    break;
+                case 2:
+                    cadastro_hospedes();
+                    break;
+                case 3:
+                    abastecer_carros();
+                    break;
+                case 4:
+                    sair();
+                    break;
+                default:
+                    erro();
+                    break;
+            }
+        }
+
+        function senha() {
+            var n_senha = parseFloat(prompt('Informe a senha'));
+            if (isNaN(n_senha) || n_senha === '') {
+                alert('Por favor, informe uma senha com números:');
+                senha();
+            } 
+            if (n_senha === 2678) {
+                alert('Senha correta');
+            } else {
+                alert('Por favor, informe uma senha correta:');
+                senha();
+            }
+        }
+
+        function reserva_quartos() {
+            alert('OVERLOOK HOTEL - RESERVA DE QUARTOS');
+            var valor_diaria = parseFloat(prompt('Qual o valor padrão da diária?'));
+            if (valor_diaria <= 0) {
+                alert('Valor inválido, ' + nome);
+                valor_diaria = parseFloat(prompt('Qual o valor padrão da diária?'));
+            }
+            var diaria = parseInt(prompt('Quantas diárias serão necessárias?'));
+            if (diaria <= 0 || diaria > 30) {
+                alert('Valor inválido, ' + nome);
+                diaria = parseInt(prompt('Quantas diárias serão necessárias?'));
+            }
+
+            var total_diaria = valor_diaria * diaria;
+            alert("O valor de " + diaria + " dias de hospedagem é de R$" + total_diaria);
+
+            escolha_quarto(valor_diaria, diaria, total_diaria);
+        }
+
+		const quartos = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"];
+        function escolha_quarto(valor_diaria, diaria, total_diaria) {
+            var nome_hospede = prompt("Qual o nome do hóspede?");
+
+            var quarto_hospede = prompt("Qual o quarto para reserva? (1-20)?");
+
+            let index = quartos.indexOf(quarto_hospede);
+            if (index !== -1) {
+                quartos.splice(index, 1);
+                alert('Quarto reservado!');
+            } else {
+                alert('Quarto já ocupado. Escolha outro.');
+                escolha_quarto(valor_diaria, diaria, total_diaria);  
+                return;
+            }
+
+            var confirmacao = prompt(nome + ", você confirma a hospedagem para " + nome_hospede + " por " + diaria + " dias no quarto " + quarto_hospede + " por R$" + total_diaria + "? S/N");
+            if (confirmacao.toLowerCase() === "s") {
+                alert(nome + ", reserva efetuada para " + nome_hospede + ".");
+                alert("Quartos disponíveis: " + quartos);
+            } else {
+                inicio();
+            }
+			inicio();
+        }
+
+        function cadastro_hospedes() {
+            alert('OVERLOOK HOTEL - CADASTRO DE HÓSPEDES');
+            inicio();
+        }
+
+        function abastecer_carros() {
+            alert('OVERLOOK HOTEL - ABASTECER');
+            inicio();
+        }
+
+        function erro() {
+            alert('Por favor, informe um número entre 1 e 4');
+            inicio();
+        }
+
+        function sair() {
+            var confirma = confirm('Você deseja sair?');
+            if (confirma) {
+                alert('Muito obrigado e até logo, ' + nome + '.');
+                window.close();
+            } else {
+                inicio();
+            }
+        }
+
+        exibir_hotel();
+    </script>
+</head>
+<body>
+</body>
+</html>
